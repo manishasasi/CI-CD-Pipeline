@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    tools{
+	     maven "maven3"
+	}
+	
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                echo "cleaning workspace"
+                cleanWs()
+            }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                echo "checking out code from git ..."
+                git branch: 'main',
+                    url: 'https://github.com/manishasasi/CI-CD-Pipeline.git',
+            }
+        }
+	}
+	
+	post {
+	   success {
+	        echo "pipeline executed successfully"
+		}
+		failure {
+		echo "pipeline failed"
+		}	
+	}
+}
